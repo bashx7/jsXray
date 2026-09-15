@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from jsxray.models.finding import Finding, FindingType
 from jsxray.models.source import JavaScriptSource
 
