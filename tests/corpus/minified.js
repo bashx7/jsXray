@@ -1,0 +1,1 @@
+const a="https://api.example.com",b="/v1/users/";fetch(a+b+userId,{method:"POST",headers:{Authorization:"Bearer "+userToken,"Content-Type":"application/json"},body:JSON.stringify({email:email,role:"admin"})}).then(r=>r.json());
