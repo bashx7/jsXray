@@ -80,6 +80,9 @@ python3 -m jsxray -jf ./js-dist/ -d target.com -o report.html
 
 # 3. Fast multi-threaded scan with custom concurrency
 python3 -m jsxray -uf urls.txt --concurrency 25 --timeout 15 -o report.html
+
+# 4. Scan targets with self-signed or internal SSL certificates (bypass SSL errors)
+python3 -m jsxray -uf urls.txt -o report.html --insecure
 ```
 
 ### CLI Options
