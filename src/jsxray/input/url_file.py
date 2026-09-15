@@ -23,7 +23,9 @@ def parse_url_file(file_path: str) -> List[str]:
             if any(c in line_no_comment for c in (" ", "\t", "\r", "\n")):
                 continue
             # Must look like a URL: start with http://, https://, //, or host.tld/path
-            if not (line_no_comment.startswith("http://") or line_no_comment.startswith("https://") or line_no_comment.startswith("//")):
+            if line_no_comment.startswith("//"):
+                line_no_comment = f"https:{line_no_comment}"
+            elif not (line_no_comment.startswith("http://") or line_no_comment.startswith("https://")):
                 if "/" in line_no_comment and "." in line_no_comment.split("/")[0]:
                     line_no_comment = f"https://{line_no_comment}"
                 elif "." in line_no_comment:

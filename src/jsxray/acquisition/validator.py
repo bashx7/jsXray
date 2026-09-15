@@ -47,9 +47,14 @@ def validate_javascript_content(
     if "\x00" in stripped[:1024]:
         return False, "Response contains binary null bytes"
 
-    # Check extension
-    path_check = (url or filename).lower()
-    is_js_extension = any(path_check.endswith(ext) for ext in [".js", ".mjs", ".cjs", ".jsx", ".ts", ".tsx"])
+    # Check extension (stripping query parameters and fragments)
+    from urllib.parse import urlparse
+    raw_path = url or filename or ""
+    try:
+        parsed_path = urlparse(raw_path).path.lower()
+    except Exception:
+        parsed_path = raw_path.lower()
+    is_js_extension = any(parsed_path.endswith(ext) for ext in [".js", ".mjs", ".cjs", ".jsx", ".ts", ".tsx"])
 
     # Check mime type
     mime_base = content_type.split(";")[0].strip().lower() if content_type else ""

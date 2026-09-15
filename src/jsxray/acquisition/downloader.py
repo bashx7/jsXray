@@ -18,7 +18,7 @@ class Downloader:
         max_size_bytes: int = 50 * 1024 * 1024,  # 50MB
         verify_ssl: bool = True,
         max_workers: int = 10,
-        user_agent: str = "Mozilla/5.0 (compatible; JSXRay/1.0)",
+        user_agent: str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     ):
         self.timeout = timeout
         self.max_size_bytes = max_size_bytes
@@ -39,6 +39,13 @@ class Downloader:
         self.session.headers.update({
             "User-Agent": self.user_agent,
             "Accept": "*/*",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Sec-Ch-Ua": '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+            "Sec-Ch-Ua-Mobile": "?0",
+            "Sec-Ch-Ua-Platform": '"Windows"',
+            "Sec-Fetch-Dest": "script",
+            "Sec-Fetch-Mode": "no-cors",
+            "Sec-Fetch-Site": "cross-site",
         })
 
     def download_url(self, url: str) -> JavaScriptSource:
@@ -61,7 +68,7 @@ class Downloader:
                 stream=True,
                 allow_redirects=True,
             )
-            if response.status_code != 200:
+            if response.status_code not in (200, 206):
                 source.errors.append(f"HTTP {response.status_code} {response.reason}")
                 return source
 

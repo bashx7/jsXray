@@ -112,6 +112,12 @@ class JSXRayEngine:
                 sources = self.downloader.download_all(urls)
                 valid_count = sum(1 for s in sources if s.is_valid_js)
                 Logger.info(f"Downloaded {len(sources)} sources ({valid_count} valid JavaScript)")
+                if valid_count < len(sources):
+                    for s in sources:
+                        if not s.is_valid_js:
+                            reasons = s.errors + s.warnings
+                            msg = ", ".join(reasons) if reasons else "Invalid JavaScript or blocked by server"
+                            Logger.warning(f"Failed to fetch/validate: {s.identifier} ({msg})")
         elif self.js_path:
             if self.target_domain:
                 Logger.info(f"Scoped target domain: {self.target_domain}")
