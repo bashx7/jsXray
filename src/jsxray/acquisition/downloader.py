@@ -103,7 +103,7 @@ class Downloader:
             return source
 
         except requests.exceptions.SSLError as e:
-            source.errors.append(f"SSL/TLS verification failed: {e}")
+            source.errors.append(f"SSL/TLS certificate verification failed: {e} (Add --insecure to bypass)")
             return source
         except requests.exceptions.Timeout:
             source.errors.append("Connection timed out")
